@@ -1,0 +1,36 @@
+version: "3"
+services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    ports:
+      - "5432:5432"
+  backend:
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - "./backend:/app"
+    depends_on:
+      - database
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: frontend.Dockerfile
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
