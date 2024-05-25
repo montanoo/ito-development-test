@@ -7,14 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  Token     Token[]
+model Roles {
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  description String
+  User        User[]
+}
 
-  @@map("public.tables.users")
+model User {
+  id           String         @id @default(uuid())
+  email        String         @unique
+  roleId       Int            @default(1) // 1: Librarian || 2: Student
+  password     String
+  createdAt    DateTime       @default(now())
+  Token        Token[]
+  BookRegistry BookRegistry[]
+  Role         Roles          @relation(fields: [roleId], references: [id])
 }
 
 model Token {
@@ -25,6 +33,41 @@ model Token {
   updatedAt DateTime @default(now())
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
-  @@map("public.tables.tokens")
+model Author {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Books Books[]
+}
+
+model Genre {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String
+  Books       Books[]
+}
+
+model Books {
+  id            Int            @id @default(autoincrement())
+  title         String
+  publishedYear DateTime
+  authorId      Int
+  genreId       Int
+  stock         Int
+  BookRegistry  BookRegistry[]
+
+  Author Author @relation(fields: [authorId], references: [id])
+  Genre  Genre  @relation(fields: [genreId], references: [id])
+}
+
+model BookRegistry {
+  id      Int      @id @default(autoincrement())
+  userId  String
+  booksId Int
+  amount  Int
+  date    DateTime @default(now())
+
+  User  User   @relation(fields: [userId], references: [id])
+  Books Books? @relation(fields: [booksId], references: [id])
 }
