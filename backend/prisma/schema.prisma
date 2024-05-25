@@ -51,7 +51,7 @@ model Genre {
 model Books {
   id            Int            @id @default(autoincrement())
   title         String
-  publishedYear DateTime
+  publishedYear Int
   authorId      Int
   genreId       Int
   stock         Int
@@ -66,6 +66,7 @@ model BookRegistry {
   userId  String
   booksId Int
   amount  Int
+  state   String   @default("awaiting") // returned or awaiting
   date    DateTime @default(now())
 
   User  User   @relation(fields: [userId], references: [id])
