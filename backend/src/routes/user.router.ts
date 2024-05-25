@@ -1,5 +1,6 @@
 import express from "express";
 import { login, refreshToken, register } from "../controllers/user.controller";
+import auth from "../middleware/auth";
 
 const userRouter = express.Router();
 
@@ -10,5 +11,5 @@ userRouter.post("/register", register);
 userRouter.post("/login", login);
 
 //  POST (refresh tokens)
-userRouter.post("/refresh", refreshToken);
+userRouter.post("/refresh", auth.hasPermissions, refreshToken);
 export default userRouter;

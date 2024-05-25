@@ -11,10 +11,12 @@ export const register = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password } = request.body as {
+    const { email, role_id, password } = request.body as {
       email: string;
+      role_id?: number;
       password: string;
     };
+
     if (!email || !password) {
       return response
         .status(400)
@@ -27,6 +29,7 @@ export const register = async (
 
     const user = await userServices.create({
       email,
+      roleId: role_id ?? 1,
       password,
     });
     const jti = uuid();

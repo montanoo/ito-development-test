@@ -5,6 +5,7 @@ import tokens from "../utils/tokens";
 
 interface CreateUserInput {
   email: string;
+  roleId?: number;
   password: string;
 }
 
@@ -32,6 +33,7 @@ async function create(user: CreateUserInput): Promise<User> {
   const data = await database.user.create({
     data: {
       email: user.email,
+      roleId: user.roleId ?? 1,
       password: user.password,
     },
   });
