@@ -1,34 +1,28 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-
+import { Link } from "react-router-dom";
+import image from "./assets/bg__main.jpg";
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <section className="flex-1 flex items-center">
+      <div className="grid grid-cols-2 gap-4 max-w-[1300px] mx-auto px-4  items-center justify-center">
+        <div className="flex flex-col justify-center">
+          <h2 className="text-5xl font-bold max-w-[450px]">
+            Find the books you are looking for:
+            <p className="text-green-500/70">easier, faster.</p>
+          </h2>
+          <div className="flex justify-start">
+            <Link
+              to="/register"
+              className="mt-4 rounded-xl bg-black text-white px-4 py-4 font-bold text-xl cursor-pointer hover:bg-black/80 transition-colors duration-300"
+            >
+              Get started
+            </Link>
+          </div>
+        </div>
+        <div>
+          <img src={image} alt="" className=" rounded-md max-h-[400px]" />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </section>
   );
 }
 
