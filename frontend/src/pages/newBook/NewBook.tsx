@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Input from "../../components/form/Input";
 import Books, { ICreateBook } from "../../requests/Books";
@@ -35,6 +35,8 @@ export default function NewBook() {
   const author = useRef<HTMLSelectElement>(null);
   const stock = useRef<HTMLInputElement>(null);
 
+  const [success, setSuccess] = useState<boolean>(false);
+
   const handleSubmit = () => {
     if (
       title.current?.value &&
@@ -50,7 +52,9 @@ export default function NewBook() {
         genreId: Number(genre.current.value),
         stock: Number(stock.current.value),
       };
-      Books.create(data);
+      Books.create(data).then(() => {
+        setSuccess(true);
+      });
     }
   };
 
@@ -100,6 +104,11 @@ export default function NewBook() {
             Add Book
           </button>
         </form>
+        {success && (
+          <div>
+            <span className="text-green-500">You have created a new book!</span>
+          </div>
+        )}
       </div>
     </section>
   );
