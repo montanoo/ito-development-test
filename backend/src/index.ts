@@ -1,36 +1,33 @@
-import express from "express";
-import { Pool } from "pg";
+import app from "./app";
+import router from "./routes/router";
 
-require("dotenv").config();
+app.use("/api", router);
 
-const app = express();
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+import { PrismaClient } from "@prisma/client";
 
-const pool = new Pool({
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  database: process.env.DB_DATABASE,
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
 });
 
-app.get("/", async (req, res) => {
+async function checkPrismaConnection() {
+  console.log(process.env.DATABASE_URL);
   try {
-    const result = await pool.query("SELECT NOW()");
-    res.json({
-      success: true,
-      message: "Connection successful",
-      timestamp: result.rows[0].now,
-    });
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: "Connection failed",
-    });
-    console.log(err.message);
+    await prisma.$connect();
+    console.log("Prisma connected to the database successfully.");
+  } catch (error) {
+    console.error("Error connecting to the database:", error);
+  } finally {
+    await prisma.$disconnect();
+    console.log("Prisma disconnected from the database.");
   }
-});
+}
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+checkPrismaConnection();
