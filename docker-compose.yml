@@ -6,12 +6,17 @@ services:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_DATABASE}
-    #    ports:
-    #      - "5432:5432"
+    ports:
+      - "5432:5432"
     volumes:
       - ./volumes/db:/var/lib/postgresql/data
     expose:
       - 5432
+    restart: unless-stopped
+    profiles:
+      - dev
+      - prod
+      - ""
   backend:
     build:
       context: ./backend
@@ -48,32 +53,35 @@ services:
     profiles:
       - ""
       - "dev"
-    backend-p:
-      build:
-        context: ./backend
-        dockerfile: backend.Dockerfile
-        target: prod_img
-      ports:
-        - "127.0.0.1:3000:3000"
-      environment:
-        - DB_HOST=${DB_HOST}
-        - DB_PORT=${DB_PORT}
-        - DB_USERNAME=${DB_USERNAME}
-        - DB_DATABASE=${DB_DATABASE}
-        - DB_PASSWORD=${DB_PASSWORD}
-        - DATABASE_URL=${DATABASE_URL}
-      depends_on:
-        - database
-      profiles:
-        - "prod"
-    frontend-p:
-      build:
-        context: ./frontend
-        dockerfile: frontend.Dockerfile
-      working_dir: /app
-      ports:
-        - "127.0.0.1:5173:5173"
-      environment:
-        - VITE_BACKEND_URL=http://localhost:3000
-      profiles:
-        - "prod"
+  backend-p:
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+      target: prod_img
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - database
+    profiles:
+      - "prod"
+    restart: unless-stopped
+
+  frontend-p:
+    build:
+      context: ./frontend
+      dockerfile: frontend.Dockerfile
+    working_dir: /app
+    ports:
+      - "127.0.0.1:5173:5173"
+    environment:
+      - VITE_BACKEND_URL=https://fmontano.ddns.net:3001
+    profiles:
+      - "prod"
+    restart: unless-stopped

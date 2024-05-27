@@ -28,7 +28,7 @@ export default function Header() {
     <header className="bg-green-50 py-4 border-b fixed w-full top-0 z-10">
       <div
         className={`max-w-[1300px] grid ${
-          user ? "md:grid-cols-3" : "grid-cols-2"
+          user && "md:grid-cols-3"
         } grid-cols-2 mx-auto px-4 items-center`}
       >
         <h3 className="font-bold md:text-3xl">
