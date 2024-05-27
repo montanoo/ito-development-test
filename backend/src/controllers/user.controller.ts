@@ -35,7 +35,7 @@ export const register = async (
     const jti = uuid();
 
     const { token, refresher } = tokens.welcomeUser(user, jti);
-    await userServices.addToken({ jti, refresher, userId: user.id });
+    await userServices.addToken({ jti, token, userId: user.id });
 
     return response.status(201).json({ exists: user, token, refresher });
   } catch (error: any) {
@@ -72,7 +72,7 @@ export const login = async (
 
     const jti = uuid();
     const { token, refresher } = tokens.welcomeUser(exists, jti);
-    await userServices.addToken({ jti, refresher, userId: exists.id });
+    await userServices.addToken({ jti, token, userId: exists.id });
 
     return response.status(200).json({ exists, token, refresher });
   } catch (err: any) {
@@ -118,7 +118,7 @@ export const refreshToken = async (
     const { token, refresher: newRefresher } = tokens.welcomeUser(user, jti);
     await userServices.addToken({
       jti,
-      refresher: newRefresher,
+      token,
       userId: user.id,
     });
 
