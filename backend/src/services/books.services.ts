@@ -41,4 +41,11 @@ async function getById(id: number): Promise<Books | null> {
   return data;
 }
 
-export default { getAll, create, getTotalCount, getById };
+async function getBaseInfo() {
+  const authors = database.author.findMany({
+    take: 10,
+  });
+  return { authors };
+}
+
+export default { getAll, create, getTotalCount, getById, getBaseInfo };

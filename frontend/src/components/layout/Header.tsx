@@ -4,6 +4,7 @@ import useUserStore from "../../stores/userStore";
 export default function Header() {
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
+  console.log(user);
 
   return (
     <header className="bg-green-50 py-4 border-b sticky top-0 z-10">
@@ -35,7 +36,7 @@ export default function Header() {
                   New student
                 </Link>
                 <Link
-                  to="/books/register"
+                  to="/books/new"
                   className="rounded-xl py-2 px-4 bg-black text-white
                   hover:bg-green-800 transition-colors duration-300"
                 >

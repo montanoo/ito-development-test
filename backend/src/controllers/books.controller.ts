@@ -65,3 +65,18 @@ export const getBookById = async (
     return response.status(404);
   }
 };
+
+export const getBookBasicInfo = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const data = await booksServices.getBaseInfo();
+    console.log(data);
+    return response.status(200).json(data);
+  } catch (err) {
+    console.error("Error fetching book basic info:", err);
+    return response.status(500).json({ message: "Internal server error" });
+  }
+};

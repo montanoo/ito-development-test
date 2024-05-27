@@ -1,10 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+import axios from "axios";
 const prisma = new PrismaClient();
 
 async function main() {
   // Delete all existing data
   await prisma.user.deleteMany();
   await prisma.roles.deleteMany();
+  await prisma.books.deleteMany();
   await prisma.genre.deleteMany();
   await prisma.author.deleteMany();
 
@@ -59,6 +61,13 @@ async function main() {
       },
     ],
   });
+
+  const userData = {
+    email: "librarian@ito.com",
+    password: "password",
+  };
+
+  await axios.post("http://localhost:3000/api/user/register", userData);
 }
 main()
   .then(async () => {

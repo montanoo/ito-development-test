@@ -11,9 +11,9 @@ export const register = async (
   next: NextFunction
 ) => {
   try {
-    const { email, role_id, password } = request.body as {
+    const { email, roleId, password } = request.body as {
       email: string;
-      role_id?: number;
+      roleId?: number;
       password: string;
     };
 
@@ -29,7 +29,7 @@ export const register = async (
 
     const user = await userServices.create({
       email,
-      roleId: role_id ?? 1,
+      roleId: roleId ?? 1,
       password,
     });
     const jti = uuid();
@@ -37,7 +37,7 @@ export const register = async (
     const { token, refresher } = tokens.welcomeUser(user, jti);
     await userServices.addToken({ jti, refresher, userId: user.id });
 
-    return response.status(201).json({ user, token, refresher });
+    return response.status(201).json({ exists: user, token, refresher });
   } catch (error: any) {
     next(error);
   }
