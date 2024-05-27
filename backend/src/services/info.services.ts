@@ -123,7 +123,7 @@ async function returnBook(id: number, userId: string) {
     });
 
     if (!existingEntry) {
-      throw new Error("Book is not pending");
+      throw new Error("Book is not awaiting");
     }
 
     const updatedBook = await database.books.update({

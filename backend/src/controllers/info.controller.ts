@@ -70,6 +70,7 @@ export const returnBook = async (
     const data = await infoServices.returnBook(id, userId);
     return response.status(200).json(data);
   } catch (err: any) {
+    console.log(err.message);
     return response.status(400).json({ error: "Book wasn't returned" });
   }
 };

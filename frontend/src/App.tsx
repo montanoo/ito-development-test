@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <section className="flex-1 flex flex-col justify-center bg-green-50/10 border-b">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[1300px] mx-auto px-4 py-12 md:py-48 items-center justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[1300px] mx-auto px-4 py-24 md:py-48 items-center justify-center">
           <div className="flex order-2 md:order-1 flex-col justify-center">
             <h2 className="text-5xl font-bold max-w-[450px]">
               Find the books you are looking for:
