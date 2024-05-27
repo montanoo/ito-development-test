@@ -11,17 +11,17 @@ interface CreateUserInput {
 
 async function addToken({
   jti,
-  refresher,
+  token,
   userId,
 }: {
   jti: string;
-  refresher: string;
+  token: string;
   userId: string;
 }) {
   const data = await database.token.create({
     data: {
       id: jti,
-      token: tokens.prepareToken(refresher),
+      token,
       userId,
     },
   });

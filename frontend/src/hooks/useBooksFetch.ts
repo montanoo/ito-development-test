@@ -28,8 +28,10 @@ export interface BooksFetchResult {
 }
 
 export default function useBooksFetch({
+  query,
   page,
 }: {
+  query: string;
   page: number;
 }): BooksFetchResult {
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,10 +40,14 @@ export default function useBooksFetch({
   const [anotherPage, setAnotherPage] = useState<boolean>(false);
 
   useEffect(() => {
+    setBooks([]);
+  }, [query]);
+
+  useEffect(() => {
     setLoading(true);
     setError(false);
     const cancel: CancelTokenSource | undefined = axios.CancelToken.source();
-    Books.getBooks(page)
+    Books.getBooks(page, query)
       .then((res) => {
         console.log(res);
         setBooks((previous) => {
@@ -57,7 +63,7 @@ export default function useBooksFetch({
     return () => {
       if (cancel) cancel.cancel();
     };
-  }, [page]);
+  }, [query, page]);
 
   return { loading, error, books, anotherPage };
 }

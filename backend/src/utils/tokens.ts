@@ -2,9 +2,9 @@ import { User } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
-function prepareToken(token: crypto.BinaryLike) {
-  return crypto.createHash("sha512").update(token).digest("hex");
-}
+  function prepareToken(token: crypto.BinaryLike) {
+    return crypto.createHash("sha512").update(token).digest("hex");
+  }
 
 function generateToken(user: User) {
   return jwt.sign(
@@ -22,7 +22,7 @@ function refreshToken(user: User, jti: String) {
       userId: user.id,
       jti,
     },
-    process.env.JWT_REFRESH_TOKEN || "defaultSecretKey",
+    process.env.JWT_REFRESH_TOKEN || "defaultSecretKeyRefresh",
     {
       expiresIn: "7d",
     }

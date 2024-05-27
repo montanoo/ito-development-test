@@ -9,7 +9,7 @@ interface InputProps {
   type: string;
   placeholder: string;
   error?: IError;
-  label: string;
+  label?: string;
   reference: RefObject<HTMLInputElement>;
 }
 

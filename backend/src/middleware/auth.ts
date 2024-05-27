@@ -1,8 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
+
+export interface IRequestModified extends Request {
+  user?: JwtPayload;
+}
 
 function hasPermissions(
-  request: Request,
+  request: IRequestModified,
   response: Response,
   next: NextFunction
 ) {
@@ -12,10 +16,15 @@ function hasPermissions(
   }
   try {
     const token = authorization.replace("Bearer ", "");
-    console.log(token);
-    const payload = jwt.verify(
+    jwt.verify(
       token,
-      process.env.JWT_ACCESS_TOKEN || "defaultSecretKey"
+      process.env.JWT_ACCESS_TOKEN || "defaultSecretKey",
+      (err, user) => {
+        if (err) return response.sendStatus(403);
+        console.log(user);
+        request.user = user as JwtPayload;
+        next();
+      }
     );
   } catch (err: any) {
     if (err.name === "TokenExpiredError") {
@@ -23,7 +32,6 @@ function hasPermissions(
     }
     throw new Error(err.message);
   }
-  return next();
 }
 
 export default { hasPermissions };
