@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import image from "./assets/bg__main.jpg";
 import InfiniteScroll from "./components/infiniteScroll/InfiniteScroll";
+import { Information } from "./pages/newBook/NewBook";
 function App() {
+  const info = useLoaderData() as Information;
+
   return (
     <>
       <section className="flex-1 flex flex-col justify-center bg-green-50/10 border-b">
@@ -25,7 +28,7 @@ function App() {
           </div>
         </div>
       </section>
-      <InfiniteScroll />
+      <InfiniteScroll info={info} />
     </>
   );
 }

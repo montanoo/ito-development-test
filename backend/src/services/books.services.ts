@@ -1,10 +1,36 @@
 import { Books } from "@prisma/client";
 import database from "../utils/database";
 
-async function getAll(skip: number) {
+async function getAll(
+  skip: number,
+  params: {
+    genreId?: number;
+    authorId?: number;
+    title?: string;
+  }
+) {
+  const { genreId, authorId, title } = params;
+
+  const query: any = {};
+
+  if (genreId) {
+    query.genreId = genreId;
+  }
+
+  if (authorId) {
+    query.authorId = authorId;
+  }
+
+  if (title) {
+    query.title = {
+      contains: title,
+      mode: "insensitive",
+    };
+  }
   return await database.books.findMany({
     skip,
     take: 10,
+    where: query,
     include: {
       Author: true,
       Genre: true,
@@ -41,11 +67,5 @@ async function getById(id: number): Promise<Books | null> {
   return data;
 }
 
-async function getBaseInfo() {
-  const authors = database.author.findMany({
-    take: 10,
-  });
-  return { authors };
-}
 
-export default { getAll, create, getTotalCount, getById, getBaseInfo };
+export default { getAll, create, getTotalCount, getById };

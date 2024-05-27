@@ -14,6 +14,7 @@ import App from "./App";
 import BooksPage from "./pages/booksPage/BooksPage";
 import Books from "./requests/Books";
 import NewBook from "./pages/newBook/NewBook";
+import Information from "./requests/Information";
 
 const BaseRouting: React.FC = () => {
   const user = useUserStore((state) => state.user);
@@ -21,7 +22,14 @@ const BaseRouting: React.FC = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
-        <Route index element={<App />} />
+        <Route
+          index
+          element={<App />}
+          loader={async () => {
+            const info = await Information.get();
+            return info.data;
+          }}
+        />
         <Route element={<ProtectedRoutes redirectPath="/" isAllowed={!user} />}>
           <Route path="/login" element={<Login />} />
         </Route>
@@ -57,7 +65,14 @@ const BaseRouting: React.FC = () => {
             />
           }
         >
-          <Route path="/books/new" element={<NewBook />} />
+          <Route
+            path="/books/new"
+            element={<NewBook />}
+            loader={async () => {
+              const info = await Information.get();
+              return info.data;
+            }}
+          />
         </Route>
       </Route>
     )

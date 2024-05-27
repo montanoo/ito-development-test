@@ -9,8 +9,17 @@ export const getBooks = async (
   try {
     const page = parseInt(request.query.page as string) || 1;
     const skip = (page - 1) * 10;
+    const { genreId, authorId, title } = request.query;
 
-    const books = await booksServices.getAll(skip);
+    const genreIdNumber = genreId ? Number(genreId) : undefined;
+    const authorIdNumber = authorId ? Number(authorId) : undefined;
+    const bookNameString = title ? String(title) : undefined;
+
+    const books = await booksServices.getAll(skip, {
+      genreId: genreIdNumber,
+      authorId: authorIdNumber,
+      title: bookNameString,
+    });
 
     const totalBooks = await booksServices.getTotalCount();
 
@@ -63,20 +72,5 @@ export const getBookById = async (
     return response.status(200).json({ book: data });
   } catch (err) {
     return response.status(404);
-  }
-};
-
-export const getBookBasicInfo = async (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {
-  try {
-    const data = await booksServices.getBaseInfo();
-    console.log(data);
-    return response.status(200).json(data);
-  } catch (err) {
-    console.error("Error fetching book basic info:", err);
-    return response.status(500).json({ message: "Internal server error" });
   }
 };
