@@ -1,9 +1,14 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-// Define the user data interface
 interface ILoginUserDatata {
-  exists: object;
+  exists: {
+    id: string;
+    email: string;
+    roleId: number;
+    password: string;
+    createdAt: string;
+  };
   refresher: string;
   token: string;
 }
@@ -11,6 +16,7 @@ interface ILoginUserDatata {
 interface UserState {
   user: ILoginUserDatata | null;
   setUser: (user: ILoginUserDatata) => void;
+  logout: () => void;
 }
 
 // Create the Zustand store with persist middleware
@@ -19,6 +25,7 @@ const useUserStore = create<UserState>()(
     (set) => ({
       user: null,
       setUser: (user) => set({ user }),
+      logout: () => set({ user: null }),
     }),
     {
       name: "token",

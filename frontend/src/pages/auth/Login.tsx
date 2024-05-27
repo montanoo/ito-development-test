@@ -4,12 +4,14 @@ import { RefObject, useRef, useState } from "react";
 import Auth from "../../requests/Auth";
 import useUserStore from "../../stores/userStore";
 import { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const emailRef: RefObject<HTMLInputElement> = useRef(null);
   const password: RefObject<HTMLInputElement> = useRef(null);
   const [error, setError] = useState<IError | undefined>();
   const setUser = useUserStore((state) => state.setUser);
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     if (emailRef?.current?.value && password?.current?.value) {
@@ -22,6 +24,7 @@ export default function Login() {
           setUser(res.data);
           localStorage.setItem("token", res.data.token);
           setError(undefined);
+          navigate("/");
         })
         .catch((err) => {
           setError(err.response.data);

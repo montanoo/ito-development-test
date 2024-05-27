@@ -44,7 +44,7 @@ async function main() {
       },
     ],
   });
-  
+
   // Seed authors
   await prisma.author.createMany({
     data: [

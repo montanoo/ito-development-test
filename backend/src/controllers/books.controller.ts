@@ -7,9 +7,18 @@ export const getBooks = async (
   next: NextFunction
 ) => {
   try {
-    const books = await booksServices.getAll();
+    const page = parseInt(request.query.page as string) || 1;
+    const skip = (page - 1) * 10;
 
-    return response.status(200).json({ books });
+    const books = await booksServices.getAll(skip);
+
+    const totalBooks = await booksServices.getTotalCount();
+
+    const totalPages = Math.ceil(totalBooks / 10);
+
+    return response
+      .status(200)
+      .json({ books, currentPage: page, lastPage: totalPages });
   } catch (err: any) {
     return response.status(400).json({ error: "Something went wrong" });
   }
@@ -39,5 +48,20 @@ export const createBook = async (
   } catch (err: any) {
     console.log(err.message);
     return response.status(400).json({ error: "Something went wrong" });
+  }
+};
+
+export const getBookById = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = request.params;
+    const data = await booksServices.getById(Number(id));
+
+    return response.status(200).json({ book: data });
+  } catch (err) {
+    return response.status(404);
   }
 };
