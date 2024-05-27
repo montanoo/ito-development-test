@@ -30,8 +30,8 @@ export default function Dashboard() {
   return (
     <section className="flex-1">
       <div className="max-w-[1300px] mx-auto px-4">
-        <h1 className="text-2xl font-bold my-8">All borrowed Books</h1>
-        <div className="grid grid-cols-5 gap-4">
+        <h1 className="text-2xl font-bold md:my-8 mt-24">All borrowed Books</h1>
+        <div className="grid grid-cols-2 md:grid-grid-cols-3 lg:grid-cols-5 md:gap-8 gap-1 pb-4">
           {bookInfo.map((book) => (
             <div key={book.Books.id}>
               <BookCard
@@ -39,9 +39,8 @@ export default function Dashboard() {
                 removeCheckout
                 hasAction={() => returnBook(book.Books.id)}
               />
-              <p className="font-bold text-xs">
-                borrowed by: {book.User.email}
-              </p>
+              <p className="text-xs">borrowed by: </p>
+              <p className="font-bold text-xs break-all">{book.User.email}</p>
             </div>
           ))}
         </div>

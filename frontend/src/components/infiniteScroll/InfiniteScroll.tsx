@@ -83,7 +83,7 @@ export default function InfiniteScroll({
             </button>
           </form>
         </div>
-        <div className="grid grid-cols-2 md:grid-grid-cols-3 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-grid-cols-3 lg:grid-cols-5 md:gap-8 gap-1 pb-4">
           {books &&
             books.map((book, idx) => {
               if (books.length === idx + 1) {

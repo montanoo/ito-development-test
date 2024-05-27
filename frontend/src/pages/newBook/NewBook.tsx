@@ -55,7 +55,7 @@ export default function NewBook() {
   };
 
   return (
-    <section className="max-w-[1300px] mx-auto px-4 flex-1 flex justify-center flex-col">
+    <section className="max-w-[1300px] mx-auto md:px-4 flex-1 flex justify-center flex-col">
       <div className="font-bold text-gray-300">developmentest</div>
       <h1 className="font-bold text-4xl py-4 mb-2">
         Add new book<span className="text-green-500">.</span>
@@ -68,7 +68,7 @@ export default function NewBook() {
             handleSubmit();
           }}
         >
-          <div className="grid grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
             <Input
               name="title"
               type="text"
