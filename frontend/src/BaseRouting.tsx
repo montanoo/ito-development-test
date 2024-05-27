@@ -41,7 +41,14 @@ const BaseRouting: React.FC = () => {
             />
           }
         >
-          <Route path="/register" element={<Register />} />
+          <Route
+            path="/register"
+            element={<Register />}
+            loader={async () => {
+              const info = await Information.get();
+              return info.data;
+            }}
+          />
         </Route>
         <Route
           path="/books/:id"

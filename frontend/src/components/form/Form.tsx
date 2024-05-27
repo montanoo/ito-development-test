@@ -1,22 +1,26 @@
-import { RefObject } from "react";
+import { FC, ReactNode, RefObject } from "react";
 import image from "../../assets/forms__main.jpg";
 import Input, { IError } from "../../components/form/Input";
 
-export default function Form({
+interface FormProps {
+  handleSubmit: () => void;
+  error?: IError;
+  email: RefObject<HTMLInputElement>;
+  password: RefObject<HTMLInputElement>;
+  type: string;
+  text: string[];
+  children?: ReactNode; // Ensure children are correctly typed
+}
+
+const Form: FC<FormProps> = ({
   handleSubmit,
   error,
   email,
   password,
   type,
   text,
-}: {
-  handleSubmit: VoidFunction;
-  error?: IError;
-  email: RefObject<HTMLInputElement>;
-  password: RefObject<HTMLInputElement>;
-  type: string;
-  text: Array<string>;
-}) {
+  children,
+}) => {
   return (
     <section className="flex-1 grid grid-cols-2">
       <div className="flex flex-col justify-center max-w-[1300px] mx-auto px-4">
@@ -40,6 +44,7 @@ export default function Form({
             reference={email}
             error={error}
           />
+          {children}
           <Input
             name="password"
             type="password"
@@ -68,4 +73,6 @@ export default function Form({
       </div>
     </section>
   );
-}
+};
+
+export default Form;

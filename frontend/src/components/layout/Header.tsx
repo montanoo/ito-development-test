@@ -14,44 +14,56 @@ export default function Header() {
             Books.com
           </Link>
         </h3>
-        {!user && (
+        <div className="flex gap-4">
           <div className="flex items-center justify-end gap-4 font-bold">
             <Link
-              to="/login"
-              className="hover:text-green-800 transition-colors duration-300"
+              to="/my/books"
+              className="rounded-xl py-2 px-4 bg-black text-white
+                  hover:bg-green-800 transition-colors duration-300"
             >
-              Login
+              My books
             </Link>
           </div>
-        )}
-        {user && (
-          <div className="flex items-center justify-end gap-4 font-bold">
-            {user.exists.roleId === 1 && (
-              <>
-                <Link
-                  to="/register"
-                  className="rounded-xl py-2 px-4 bg-black text-white
+          {!user && (
+            <div className="flex items-center justify-end gap-4 font-bold">
+              <Link
+                to="/login"
+                className="hover:text-green-800 transition-colors duration-300"
+              >
+                Login
+              </Link>
+            </div>
+          )}
+
+          {user && (
+            <div className="flex items-center justify-end gap-4 font-bold">
+              {user.exists.roleId === 1 && (
+                <>
+                  <Link
+                    to="/register"
+                    className="rounded-xl py-2 px-4 bg-black text-white
                   hover:bg-green-800 transition-colors duration-300"
-                >
-                  New student
-                </Link>
-                <Link
-                  to="/books/new"
-                  className="rounded-xl py-2 px-4 bg-black text-white
+                  >
+                    New student
+                  </Link>
+                  <Link
+                    to="/books/new"
+                    className="rounded-xl py-2 px-4 bg-black text-white
                   hover:bg-green-800 transition-colors duration-300"
-                >
-                  New book
-                </Link>
-              </>
-            )}
-            <button
-              onClick={logout}
-              className="hover:text-green-800 transition-colors duration-300"
-            >
-              Logout
-            </button>
-          </div>
-        )}
+                  >
+                    New book
+                  </Link>
+                </>
+              )}
+              <button
+                onClick={logout}
+                className="hover:text-green-800 transition-colors duration-300"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

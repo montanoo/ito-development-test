@@ -18,7 +18,7 @@ export default function Select({
     <div className="flex flex-col h-full">
       <label className="font-bold pl-1">{label} </label>
       <select
-        className="bg-transparent rounded-md text-sm py-1 border h-full px-4"
+        className="bg-transparent rounded-md text-sm py-4 border h-full px-4"
         ref={reference}
         defaultValue=""
       >

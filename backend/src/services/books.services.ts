@@ -63,9 +63,12 @@ async function getById(id: number): Promise<Books | null> {
     where: {
       id,
     },
+    include: {
+      Author: true,
+      Genre: true,
+    },
   });
   return data;
 }
-
 
 export default { getAll, create, getTotalCount, getById };

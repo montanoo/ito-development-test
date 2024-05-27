@@ -18,4 +18,7 @@ export default {
   create(data: ICreateBook) {
     return Http.post("/books/create", data);
   },
+  requestCopy(id: number) {
+    return Http.post("/info/request", { id });
+  },
 };

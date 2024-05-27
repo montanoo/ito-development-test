@@ -27,6 +27,7 @@ export const requestBook = async (
     const data = await infoServices.requestBook(id, userId);
     return response.status(200).json(data);
   } catch (err: any) {
-    console.error("Error:", err.message);
+    console.log("HERE XD");
+    return response.status(400).json({ error: "Already borrowed this book" });
   }
 };

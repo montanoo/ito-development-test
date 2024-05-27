@@ -15,9 +15,16 @@ export interface Author {
   name: string;
 }
 
+export interface Roles {
+  id: number;
+  name: string;
+  description: string;
+}
+
 export interface Information {
   genres: Genre[];
   authors: Author[];
+  roles: Roles[];
 }
 
 export default function NewBook() {
