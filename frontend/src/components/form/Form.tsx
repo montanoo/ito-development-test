@@ -22,7 +22,7 @@ const Form: FC<FormProps> = ({
   children,
 }) => {
   return (
-    <section className="flex-1 grid grid-cols-2">
+    <section className="flex-1 py-12 md:py-0 md:grid md:grid-cols-2">
       <div className="flex flex-col justify-center max-w-[1300px] mx-auto px-4">
         <div>
           <div className="font-bold text-gray-300 pb-8">developmentest</div>
@@ -64,7 +64,7 @@ const Form: FC<FormProps> = ({
           </div>
         </form>
       </div>
-      <div className="relative">
+      <div className="md:relative hidden">
         <img
           src={image}
           alt=""

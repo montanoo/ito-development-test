@@ -58,7 +58,7 @@ export default function InfiniteScroll({
               handleSearch();
             }}
           >
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-3 gap-4">
               <Input
                 name="book"
                 type="text"
@@ -83,7 +83,7 @@ export default function InfiniteScroll({
             </button>
           </form>
         </div>
-        <div className="grid grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-grid-cols-3 lg:grid-cols-5 gap-8">
           {books &&
             books.map((book, idx) => {
               if (books.length === idx + 1) {

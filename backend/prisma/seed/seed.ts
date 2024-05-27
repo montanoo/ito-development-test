@@ -8,6 +8,7 @@ async function main() {
   await prisma.roles.deleteMany();
   await prisma.books.deleteMany();
   await prisma.genre.deleteMany();
+  await prisma.bookRegistry.deleteMany();
   await prisma.author.deleteMany();
 
   // Reset the ID sequences

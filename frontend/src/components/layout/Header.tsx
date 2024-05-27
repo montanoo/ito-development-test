@@ -8,59 +8,73 @@ export default function Header() {
 
   return (
     <header className="bg-green-50 py-4 border-b sticky top-0 z-10">
-      <div className="max-w-[1300px] grid grid-cols-2 mx-auto px-4 items-center">
+      <div
+        className={`max-w-[1300px] grid ${
+          user ? "grid-cols-3" : "grid-cols-2"
+        } mx-auto px-4 items-center`}
+      >
         <h3 className="font-bold text-3xl">
           <Link to="/" className="cursor-pointer">
             Books.com
           </Link>
         </h3>
-        <div className="flex gap-4">
+
+        {user && (
           <div className="flex items-center justify-end gap-4 font-bold">
-            <Link
-              to="/my/books"
-              className="rounded-xl py-2 px-4 bg-black text-white
-                  hover:bg-green-800 transition-colors duration-300"
-            >
-              My books
-            </Link>
-          </div>
-          {!user && (
+            {user.exists.roleId === 1 && (
+              <>
+                <Link
+                  to="/register"
+                  className="underline underline-offset-4
+                  hover:text-green-800 transition-colors duration-300"
+                >
+                  New user
+                </Link>
+                <Link
+                  to="/dashboard"
+                  className="underline underline-offset-4
+                  hover:text-green-800 transition-colors duration-300"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/books/new"
+                  className="underline underline-offset-4
+                  hover:text-green-800 transition-colors duration-300"
+                >
+                  New book
+                </Link>
+              </>
+            )}
+
             <div className="flex items-center justify-end gap-4 font-bold">
+              <Link
+                to="/my/books"
+                className="underline underline-offset-4
+                  hover:text-green-800 transition-colors duration-300"
+              >
+                My books
+              </Link>
+            </div>
+          </div>
+        )}
+        <div className="flex justify-end">
+          {user && (
+            <button
+              onClick={logout}
+              className="hover:text-green-800 font-bold transition-colors duration-300"
+            >
+              Logout
+            </button>
+          )}
+          {!user && (
+            <div className="flex gap-4 font-bold ">
               <Link
                 to="/login"
                 className="hover:text-green-800 transition-colors duration-300"
               >
                 Login
               </Link>
-            </div>
-          )}
-
-          {user && (
-            <div className="flex items-center justify-end gap-4 font-bold">
-              {user.exists.roleId === 1 && (
-                <>
-                  <Link
-                    to="/register"
-                    className="rounded-xl py-2 px-4 bg-black text-white
-                  hover:bg-green-800 transition-colors duration-300"
-                  >
-                    New student
-                  </Link>
-                  <Link
-                    to="/books/new"
-                    className="rounded-xl py-2 px-4 bg-black text-white
-                  hover:bg-green-800 transition-colors duration-300"
-                  >
-                    New book
-                  </Link>
-                </>
-              )}
-              <button
-                onClick={logout}
-                className="hover:text-green-800 transition-colors duration-300"
-              >
-                Logout
-              </button>
             </div>
           )}
         </div>

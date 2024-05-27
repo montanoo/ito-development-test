@@ -49,7 +49,7 @@ export default function BooksPage() {
             ""
           )}
           <div className="min-h-[1.2rem] mt-2">
-            {error && <p className="text-xs text-red-500 z-20">{error}</p>}
+            {error && <p className="text-xs text-red-500 z-20id">{error}</p>}
           </div>
         </div>
       </div>

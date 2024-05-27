@@ -15,6 +15,8 @@ import BooksPage from "./pages/booksPage/BooksPage";
 import Books from "./requests/Books";
 import NewBook from "./pages/newBook/NewBook";
 import Information from "./requests/Information";
+import MyBooks from "./pages/myBooks/MyBooks";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 const BaseRouting: React.FC = () => {
   const user = useUserStore((state) => state.user);
@@ -34,23 +36,6 @@ const BaseRouting: React.FC = () => {
           <Route path="/login" element={<Login />} />
         </Route>
         <Route
-          element={
-            <ProtectedRoutes
-              redirectPath="/"
-              isAllowed={user?.exists.roleId === 1}
-            />
-          }
-        >
-          <Route
-            path="/register"
-            element={<Register />}
-            loader={async () => {
-              const info = await Information.get();
-              return info.data;
-            }}
-          />
-        </Route>
-        <Route
           path="/books/:id"
           element={<BooksPage />}
           loader={async ({ params }) => {
@@ -65,6 +50,15 @@ const BaseRouting: React.FC = () => {
           }}
         />
         <Route
+          path="/my/books"
+          element={<MyBooks />}
+          loader={async () => {
+            const books = await Information.myBooks();
+            return books.data;
+          }}
+        />
+
+        <Route
           element={
             <ProtectedRoutes
               redirectPath="/"
@@ -75,6 +69,22 @@ const BaseRouting: React.FC = () => {
           <Route
             path="/books/new"
             element={<NewBook />}
+            loader={async () => {
+              const info = await Information.get();
+              return info.data;
+            }}
+          />
+          <Route
+            path="/dashboard"
+            element={<Dashboard />}
+            loader={async () => {
+              const books = await Information.getPendingBooks();
+              return books.data;
+            }}
+          />
+          <Route
+            path="/register"
+            element={<Register />}
             loader={async () => {
               const info = await Information.get();
               return info.data;

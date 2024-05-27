@@ -27,7 +27,49 @@ export const requestBook = async (
     const data = await infoServices.requestBook(id, userId);
     return response.status(200).json(data);
   } catch (err: any) {
-    console.log("HERE XD");
     return response.status(400).json({ error: "Already borrowed this book" });
+  }
+};
+
+export const requestBorrowedInformation = async (
+  request: IRequestModified,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = request.user as { userId: string };
+    const data = await infoServices.getRequestedBooksByUser(userId);
+    return response.status(200).json(data);
+  } catch (err: any) {
+    console.log(err);
+    return response.status(500).json({ error: "Server error" });
+  }
+};
+
+export const requestAllBorrowedInfo = async (
+  request: IRequestModified,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const data = await infoServices.getAllPendingInformation();
+    return response.status(200).json(data);
+  } catch (err: any) {
+    console.log(err);
+    return response.status(500).json({ error: "Server error" });
+  }
+};
+export const returnBook = async (
+  request: IRequestModified,
+  response: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = request.body;
+    const { userId } = request.user as { userId: string };
+    const data = await infoServices.returnBook(id, userId);
+    return response.status(200).json(data);
+  } catch (err: any) {
+    return response.status(400).json({ error: "Book wasn't returned" });
   }
 };
