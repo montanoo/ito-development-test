@@ -65,9 +65,8 @@ export const returnBook = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = request.body;
-    const { userId } = request.user as { userId: string };
-    const data = await infoServices.returnBook(id, userId);
+    const { id, borrowId } = request.body;
+    const data = await infoServices.returnBook(id, borrowId);
     return response.status(200).json(data);
   } catch (err: any) {
     console.log(err.message);

@@ -10,7 +10,7 @@ export default {
   getPendingBooks() {
     return Http.get("/info/pending");
   },
-  returnBook(id: number) {
-    return Http.post("/info/return", { id });
+  returnBook(id: number, borrowId: number) {
+    return Http.post("/info/return", { id, borrowId });
   },
 };

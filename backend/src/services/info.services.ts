@@ -100,7 +100,7 @@ async function getAllPendingInformation() {
   return information;
 }
 
-async function returnBook(id: number, userId: string) {
+async function returnBook(id: number, borrowId: number) {
   try {
     const book = await database.books.findUnique({
       where: { id },
@@ -116,7 +116,7 @@ async function returnBook(id: number, userId: string) {
 
     const existingEntry = await database.bookRegistry.findFirst({
       where: {
-        userId: userId,
+        id: borrowId,
         booksId: id,
         state: "awaiting",
       },

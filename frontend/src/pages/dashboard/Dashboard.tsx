@@ -19,8 +19,8 @@ export default function Dashboard() {
 
   const [bookInfo, setBookInfo] = useState<FullInformation[]>(info);
 
-  async function returnBook(id: number) {
-    await Information.returnBook(id);
+  async function returnBook(id: number, borrowId: number) {
+    await Information.returnBook(id, borrowId);
     const books = await Information.getPendingBooks();
     setBookInfo(books.data);
   }
@@ -37,7 +37,7 @@ export default function Dashboard() {
               <BookCard
                 book={book.Books}
                 removeCheckout
-                hasAction={() => returnBook(book.Books.id)}
+                hasAction={() => returnBook(book.Books.id, book.id)}
               />
               <p className="text-xs">borrowed by: </p>
               <p className="font-bold text-xs break-all">{book.User.email}</p>
