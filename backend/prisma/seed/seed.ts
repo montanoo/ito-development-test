@@ -4,12 +4,12 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Delete all existing data
+  await prisma.bookRegistry.deleteMany();
   await prisma.user.deleteMany();
   await prisma.roles.deleteMany();
   await prisma.books.deleteMany();
-  await prisma.genre.deleteMany();
-  await prisma.bookRegistry.deleteMany();
   await prisma.author.deleteMany();
+  await prisma.genre.deleteMany();
 
   // Reset the ID sequences
   await prisma.$executeRaw`ALTER SEQUENCE "Roles_id_seq" RESTART WITH 1;`;
